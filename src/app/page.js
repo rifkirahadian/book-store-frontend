@@ -33,10 +33,8 @@ export default function Home() {
   }
 
   const handleScroll = () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop ===
-      document.documentElement.offsetHeight
-    ) {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    if (scrollTop + clientHeight >= 0.8 * scrollHeight) {
       loadBooks();
     }
   };
