@@ -23,7 +23,7 @@ export const BookCard = ({ book }) => {
             <Card.Text>Point: <b> {book.point} </b></Card.Text>
           </Col>
           <Col sm={6} style={{ textAlign:'right' }}>
-            <Button variant="primary">Checkout</Button>
+            <Button variant="primary">Order</Button>
           </Col>
         </Row>
       </Card.Body>
