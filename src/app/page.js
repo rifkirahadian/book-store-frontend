@@ -7,15 +7,48 @@ import { findBooks } from "@/services/api";
 import { BookCard } from "@/components/book";
 
 export default function Home() {
+  const limit = 8;
   const [books, setBooks] = useState([]);
-  const loadBooks = async () => {
-    const data = await findBooks();
-    setBooks(data.data);
+  const [skip, setSkip] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
+
+  const loadBooks = async (isFirst = false) => {
+    if (!isFirst && skip > total) {
+      return false;
+    }
+    
+    setLoading(true);
+    const data = await findBooks({ offset: skip });
+    const { rows, count } = data.data;
+    setTotal(count);
+    if (isFirst) {
+      setBooks(rows);
+      setSkip(limit);
+    } else {
+      setBooks(prevBooks => [...prevBooks, ...rows]);
+      setSkip(prevSkip => prevSkip + limit);
+    }
+    setLoading(false);
   }
 
+  const handleScroll = () => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop ===
+      document.documentElement.offsetHeight
+    ) {
+      loadBooks();
+    }
+  };
+
   useEffect(() => {
-    loadBooks();
-  }, [])
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [skip]);
+
+  useEffect(() => {
+    loadBooks(true);
+  }, []);
 
   return (
     <div className='pt-3'>
@@ -29,6 +62,7 @@ export default function Home() {
           </Col>
         ))}
       </Row>
+      {loading && <div className='text-center'>Loading...</div>}
     </div>
   );
 }

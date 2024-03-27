@@ -1,3 +1,4 @@
+import React from 'react';
 import { Badge, Button, Card, Col, Row } from 'react-bootstrap';
 
 export const BookCard = ({ book }) => {
@@ -9,12 +10,12 @@ export const BookCard = ({ book }) => {
         <Card.Text>{book.writer}</Card.Text>
         <Card.Text>
           {book.tag && book.tag.split(',').map((tag, index) => (
-            <>
-              <Badge key={index} variant="primary" className="ml-3">
+            <React.Fragment key={index}>
+              <Badge variant="primary" className="ml-3">
                 {tag}
               </Badge>
               &nbsp;
-            </>
+            </React.Fragment>
           ))}
         </Card.Text>
         <Row>
@@ -25,8 +26,6 @@ export const BookCard = ({ book }) => {
             <Button variant="primary">Checkout</Button>
           </Col>
         </Row>
-        
-        
       </Card.Body>
     </Card>
   );
