@@ -65,7 +65,7 @@ export default function Home() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Row className={width > 900 ? 'mx-5' : ''}>
+      <Row className={width > 900 ? 'mx-5' : 'mx-1'}>
         {books.map((book, index) => (
           <Col lg={3} key={index}>
             <BookCard book={book} />

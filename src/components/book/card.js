@@ -19,10 +19,10 @@ export const BookCard = ({ book }) => {
           ))}
         </Card.Text>
         <Row>
-          <Col sm={6} className="pt-2">
+          <Col xs={6} className="pt-2">
             <Card.Text>Point: <b> {book.point} </b></Card.Text>
           </Col>
-          <Col sm={6} style={{ textAlign:'right' }}>
+          <Col xs={6} style={{ textAlign:'right' }}>
             <Button variant="primary">Order</Button>
           </Col>
         </Row>
