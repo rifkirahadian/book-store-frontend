@@ -1,10 +1,11 @@
 'use client'
 
-import { Col, Container, Navbar, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { findBooks } from "@/services/api";
 import { BookCard } from "@/components/book";
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Header } from "@/components/common";
 
 export default function Home() {
   const limit = 8;
@@ -42,17 +43,7 @@ export default function Home() {
 
   return (
     <div>
-      <Navbar className="bg-dark mb-3">
-        <Container>
-          <Navbar.Brand href="#home" className='text-light'>Book Store</Navbar.Brand>
-          <Navbar.Toggle />
-          <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text className='text-light'>
-              {/* Signed in as: <a href="#login" className='text-light'>User</a> */}
-            </Navbar.Text>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+      <Header />
       <InfiniteScroll
         dataLength={books.length}
         next={loadBooks}
