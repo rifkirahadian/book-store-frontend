@@ -8,13 +8,14 @@ import { Form, Button, Container, Card } from 'react-bootstrap';
 const Login = () => {
   const router = useRouter();
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setUser({
       point: 100,
       email,
+      name,
     });
     router.push('/')
   };
@@ -25,7 +26,17 @@ const Login = () => {
         <Card.Header as="h5">Login</Card.Header>
         <Card.Body>
           <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formBasicName">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Name"
+                value={name}
+                required
+                onChange={(e) => setName(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail" className='mb-3 mt-3'>
               <Form.Label>Email address</Form.Label>
               <Form.Control
                 type="email"
@@ -35,18 +46,6 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </Form.Group>
-
-            <Form.Group controlId="formBasicPassword" className='mb-3 mt-3'>
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                value={password}
-                required
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Form.Group>
-
             <Button variant="primary" type="submit">
               Submit
             </Button>

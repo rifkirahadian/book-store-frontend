@@ -3,17 +3,28 @@
 import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { findBooks } from "@/services/api";
-import { BookCard } from "@/components/book";
+import { BookCard, ModalOrder } from "@/components/book";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Header } from "@/components/common";
+import { useRouter } from "next/navigation";
+import { getUser } from "@/services/localstorage";
 
 export default function Home() {
+  const router = useRouter();
   const limit = 8;
   const [books, setBooks] = useState([]);
   const [skip, setSkip] = useState(0);
   const [loading, setLoading] = useState(false);
   const [width, setWidth] = useState(1400);
   const [hasMore, setHasMore] = useState(true);
+  const [modalOrder, setModalOrder] = useState({
+    id: null,
+    show: false,
+    title: null,
+    writer: null,
+    cover_image: null,
+    point: null,
+  });
 
   const loadBooks = async (isFirst = false) => {
     setLoading(true);
@@ -34,6 +45,34 @@ export default function Home() {
     setLoading(false);
   }
 
+  const handleClose = () => {
+    setModalOrder({
+      id: null,
+      show: false,
+      title: null,
+      writer: null,
+      cover_image: null,
+      point: null,
+    });
+  }
+
+  const onOpenModalOrder = (book) => {
+    const user = getUser();
+    if (!user) {
+      router.push('/login')
+    } else {
+      const { id, title, writer, cover_image, point } = book;
+      setModalOrder({
+        id,
+        show: true,
+        title,
+        writer,
+        cover_image,
+        point
+      })
+    }
+  };
+
   useEffect(() => {
     loadBooks(true);
     window.addEventListener('resize', ()=> {
@@ -53,11 +92,12 @@ export default function Home() {
         <Row className={width > 900 ? 'mx-5' : 'mx-1'}>
           {books.map((book, index) => (
             <Col lg={3} key={index}>
-              <BookCard book={book} />
+              <BookCard book={book} onOpenModalOrder={onOpenModalOrder} />
             </Col>
           ))}
         </Row> 
       </InfiniteScroll>
+      <ModalOrder handleClose={handleClose} modalOrder={modalOrder} />
     </div>
   );
 }

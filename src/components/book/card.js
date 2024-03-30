@@ -1,7 +1,7 @@
 import React from 'react';
 import { Badge, Button, Card, Col, Row } from 'react-bootstrap';
 
-export const BookCard = ({ book }) => {
+export const BookCard = ({ book, onOpenModalOrder }) => {
   return (
     <Card className='mb-3'>
       <Card.Img variant="top" src={book.cover_image} />
@@ -23,7 +23,7 @@ export const BookCard = ({ book }) => {
             <Card.Text>Point: <b> {book.point} </b></Card.Text>
           </Col>
           <Col xs={6} style={{ textAlign:'right' }}>
-            <Button variant="primary">Order</Button>
+            <Button onClick={() => onOpenModalOrder(book)} variant="primary">Order</Button>
           </Col>
         </Row>
       </Card.Body>
