@@ -23,7 +23,7 @@ export const Header = () => {
           <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
             {user && (
               <Nav className="me-auto">
-                <Nav.Link href="#home" className='text-light'>My Order</Nav.Link>
+                <Nav.Link href="my-order" className='text-light'>My Order</Nav.Link>
                 <Nav.Link className='text-light' onClick={onLogout}>Logout</Nav.Link>
               </Nav>
             )}

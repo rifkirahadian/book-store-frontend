@@ -16,8 +16,6 @@ export const ModalOrder = ({ handleClose, modalOrder }) => {
     }
   }
 
-
-
   const onOrder = async (event)  => {
     event.preventDefault();
     if (user?.point < modalOrder.point) {
