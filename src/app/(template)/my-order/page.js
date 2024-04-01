@@ -51,7 +51,6 @@ export default function Home() {
 
   return (
     <div >
-      <Header />
       <div className="mx-4">
         <InfiniteScroll
             dataLength={data.length}

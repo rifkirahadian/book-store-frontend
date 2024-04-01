@@ -97,7 +97,6 @@ export default function Home() {
 
   return (
     <div>
-      <Header />
       <div className="d-flex align-items-center justify-content-end mx-5 pb-2">
         <Row>
           <Col>
