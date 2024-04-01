@@ -1,6 +1,6 @@
 'use client'
 
-import { Col, Row } from "react-bootstrap";
+import { Col, Form, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { findBooks } from "@/services/api";
 import { BookCard, ModalOrder } from "@/components/book";
@@ -25,10 +25,11 @@ export default function Home() {
     cover_image: null,
     point: null,
   });
+  const [search, setSearch] = useState();
 
   const loadBooks = async (isFirst = false) => {
     setLoading(true);
-    const data = await findBooks({ offset: skip });
+    const data = await findBooks({ offset: skip, search });
     const { rows, count } = data.data;
     if (count < limit + skip) {
       setHasMore(false);
@@ -73,6 +74,13 @@ export default function Home() {
     }
   };
 
+  const onSearch = (e) => {
+    if (e.key === 'Enter') {
+      setSkip(0);
+      setSearch(e.target.value);
+    }
+  }
+
   useEffect(() => {
     loadBooks(true);
     window.addEventListener('resize', ()=> {
@@ -80,9 +88,28 @@ export default function Home() {
     })
   }, []);
 
+  useEffect(() => {
+    if (search !== undefined) {
+      setBooks([]);
+      loadBooks(true);
+    }
+  }, [search]);
+
   return (
     <div>
       <Header />
+      <div className="d-flex align-items-center justify-content-end mx-5 pb-2">
+        <Row>
+          <Col>
+            <Form.Control
+                type="text"
+                placeholder="Search"
+                required
+                onKeyDown={onSearch}
+              />
+          </Col>
+        </Row>
+      </div>
       <InfiniteScroll
         dataLength={books.length}
         next={loadBooks}
